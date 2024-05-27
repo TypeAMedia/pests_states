@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel | Green living states</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="./libs/css/tippy.min.css" />
+  <link rel="stylesheet" href="./libs/css/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="./libs/css/choices.min.css" />
+  <link rel="stylesheet" href="./libs/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+
+<body>
+  <div class="container" id="root">
+    <header>
+      <div class="titles">
+        <h1 class="main-title">Green living states</h1>
+        <p class="sub-title">
+          Which states in the US are the most environmentally friendly and technologically advanced in terms of green
+          energy usage? Browse the interactive map in the ‘overall view’ to see which states rank best in each category
+          and the ‘state view’ to find more in-depth data for each location.
+        </p>
+      </div>
+
+      <div class="tabs" id="tabs">
+        <ul class="nav nav-pills nav-justified" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="overall-tab" data-value="overall view" data-toggle="tab"
+              data-target="#overall_content" type="button" role="tab" aria-controls="overall_content"
+              aria-selected="true">
+              Overall view
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="state-tab" data-value="state view" data-toggle="tab"
+              data-target="#state_content" type="button" role="tab" aria-controls="state_content" aria-selected="false">
+              State view
+            </button>
+          </li>
+        </ul>
+      </div>
+
+    </header>
+
+    <main>
+      <div class="tab-content">
+
+        <!-- OVERALL -->
+        <div class="tab-pane fade show active overall-content" id="overall_content" role="tabpanel"
+          aria-labelledby="overall-tab">
+
+          <div class="categories-slider">
+            <div class="swiper" id="categories_swiper">
+
+              <div class="swiper-wrapper">
+
+              </div>
+
+              <div class="swiper-pager">
+
+                <div class="swiper-button-prev category-slide-prev"></div>
+
+                <div class="swiper-button-next category-slide-next"></div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="overall-map">
+            <div id="overall_map"></div>
+
+            <div id="overall_map_legend"></div>
+          </div>
+
+          <div class="top-10">
+            <div class="top-10-inner">
+              <h4 class="title">
+                Top 10 states:
+              </h4>
+              <p class="subtitle">
+                To see in depth data for all states switch to ‘state view’ at the top of the page.
+              </p>
+
+              <div class="round-box">
+                <div class="category-chip" id="category_chip">
+                  <div class="icon">
+                    <img src="./images/icons/overall.svg" />
+                  </div>
+                  <div class="label">Overall rank</div>
+                </div>
+
+                <div class="table-wrap" id="top_10_table">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer>
+            <img src="./images/excel-logo.svg" />
+          </footer>
+        </div>
+
+        <!-- STATES -->
+
+        <div class="tab-pane fade state-content" id="state_content" role="tabpanel" aria-labelledby="state-tab">
+          <div class="row m-0 state-content-row">
+            <div class="col-12 col-sm-6 p-0">
+              <div class="left-column">
+                <div class="dropdown">
+                  <select id="categories_select"></select>
+                </div>
+
+                <div class="states-map">
+                  <div id="state_map"></div>
+                  <div id="state_map_legend"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 p-0">
+              <div class="right-column">
+                <div class="states-slider">
+                  <div class="swiper" id="states_swiper">
+  
+                    <div class="swiper-wrapper">
+  
+                    </div>
+  
+                    <div class="swiper-pager states-pager">
+
+                      <div class="swiper-button-prev state-slide-prev"></div>
+  
+                      <div class="swiper-button-next state-slide-next"></div>
+
+                      <div class="swiper-pagination"></div>
+  
+  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer>
+            <img src="./images/excel-logo.svg" />
+          </footer>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="./libs/js/jquery.js"></script>
+  <script src="./libs/js/bootstrap.min.js"></script>
+  <script src="./libs/js/popper.min.js"></script>
+  <script src="./libs/js/tippy.min.js"></script>
+  <script src="./libs/js/swiper-bundle.min.js"></script>
+  <script src="./libs/js/d3.v7.min.js"></script>
+  <script src="./libs/js/topojson-client.min.js"></script>
+  <script src="./libs/js/choices.min.js"></script>
+  <script src="./scripts/utils.js"></script>
+  <script src="./scripts/us-map.js"></script>
+  <script src="./scripts/main.js"></script>
+</body>
+
+</html>
