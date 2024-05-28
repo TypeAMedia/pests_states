@@ -35,11 +35,11 @@ const isVisible = function (ele, container) {
 
   // The element is fully visible in the container
   return (
-      (eleTop >= containerTop && eleBottom <= containerBottom) 
-      // ||
-      // // Some part of the element is visible in the container
-      // (eleTop < containerTop && containerTop < eleBottom) ||
-      // (eleTop < containerBottom && containerBottom < eleBottom)
+    (eleTop >= containerTop && eleBottom <= containerBottom)
+    // ||
+    // // Some part of the element is visible in the container
+    // (eleTop < containerTop && containerTop < eleBottom) ||
+    // (eleTop < containerBottom && containerBottom < eleBottom)
   );
 };
 
@@ -203,21 +203,20 @@ function getRandomId() {
 
 function initDropdown({ list, id, cb, placeholder }) {
   const select = document.querySelector(id);
-  const options = list;
+  const options = list.slice();
+
+
+  if (placeholder) {
+    options.unshift({ label: placeholder, value: '', selected: true })
+  }
 
   const choice = new Choices(select, {
-    choices: [
-      ...(placeholder
-        ? [{ selected: true, value: "", label: placeholder }]
-        : []),
-      ...options,
-    ],
+    choices: options,
     position: "bottom",
     shouldSort: false,
     itemSelectText: "",
-    placeholder: false,
+    searchPlaceholderValue: 'Search',
     searchResultLimit: options.length,
-    searchEnabled: false,
   });
 
   select.addEventListener(

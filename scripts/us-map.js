@@ -67,8 +67,9 @@ function USMap(params) {
 
     projection = d3.geoAlbersUsa().scale(1300).translate([487.5, 305]);
 
+
     // state path generator
-    path = d3.geoPath();
+    path = d3.geoPath()
 
     setColorScale();
 
@@ -346,11 +347,13 @@ function USMap(params) {
     chartHeight = attrs.height - attrs.margin.bottom - attrs.margin.top;
   }
 
+  let scaleColors = ['#0255A3', '#0255A380', '#E0212680', '#E02126']
+
   function setColorScale() {
     const [min, max] = d3.extent(Object.values(attrs.data));
 
     // color linear scale
-    colorScale = d3.scaleQuantile().domain([min, max]).range(attrs.colors);
+    colorScale = d3.scaleQuantile().domain([min, max]).range(scaleColors);
   }
 
   function zoomed(e) {
