@@ -205,7 +205,7 @@ function USMap(params) {
 
     const tooltipOptions = {
       allowHTML: true,
-      arrow: true,
+      arrow: false,
       maxWidth: 250,
       duration: 0,
       placement: "top",
@@ -347,13 +347,13 @@ function USMap(params) {
     chartHeight = attrs.height - attrs.margin.bottom - attrs.margin.top;
   }
 
-  let scaleColors = ['#0255A3', '#0255A380', '#E0212680', '#E02126']
+
 
   function setColorScale() {
     const [min, max] = d3.extent(Object.values(attrs.data));
 
     // color linear scale
-    colorScale = d3.scaleQuantile().domain([min, max]).range(scaleColors);
+    colorScale = d3.scaleQuantile().domain([min, max]).range(attrs.colors);
   }
 
   function zoomed(e) {

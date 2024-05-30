@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Most Common Pests States</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="./libs/css/tippy.min.css" />
+  <link rel="stylesheet" href="./libs/css/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="./libs/css/choices.min.css" />
+  <link rel="stylesheet" href="./libs/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+
+<body>
+  <div class="container" id="root">
+    <header>
+      <div class="titles">
+        <h1 class="main-title">Which Pests Are Most Common in Different States?</h1>
+        <p class="sub-title">Explore the map to find out which pests are the most searched for by state.</p>
+      </div>
+
+    </header>
+
+    <main>
+      <div class="tab-content">
+
+        <!-- OVERALL -->
+        <div class="tab-pane fade show active overall-content" id="overall_content" role="tabpanel"
+          aria-labelledby="overall-tab">
+          <div class="map-content">
+            <div class="dropdown">
+              <select id="categories_select"></select>
+            </div>
+
+            <div class="overall-map">
+              <div id="overall_map"></div>
+              <div class="btn-zooms">
+                <div class="mb-1">
+                  <button class="btn btn-rect" id="zoom_in">
+                    <img src="./images/zoom-in.svg">
+                  </button>
+                </div>
+
+                <div>
+                  <button class="btn btn-rect" id="zoom_out">
+                    <img src="./images/zoom-out.svg">
+                  </button>
+                </div>
+              </div>
+              <div class="score-div">
+                <label class="score-text">least affected</label>
+                <label class="score-text">Most affected</label>
+              </div>
+              <div class="rank-line">
+                <div class="rank-box first-rect"></div>
+                <div class="rank-box second-rect"></div>
+                <div class="rank-box third-rect"></div>
+                <div class="rank-box fourth-rect"></div>
+              </div>
+
+              <div class="wrap-line"></div>
+              <div class="table-title">Top 10 pest searches</div>
+            </div>
+
+          </div>
+
+
+          <div class="top-10">
+            <div class="table-box">
+              <div class="table-content">
+                <div class="category-chip" id="table">
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- STATES -->
+
+        <div class="tab-pane fade state-content" id="state_content" role="tabpanel" aria-labelledby="state-tab">
+          <div class="row m-0 state-content-row">
+            <div class="col-12 col-sm-6 p-0">
+              <div class="left-column">
+
+
+                <div class="states-map">
+                  <div id="state_map"></div>
+                  <div id="state_map_legend"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 p-0">
+              <div class="right-column">
+              </div>
+            </div>
+          </div>
+
+          <footer>
+            <img src="./images/excel-logo.svg" />
+          </footer>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="./libs/js/jquery.js"></script>
+  <script src="./libs/js/bootstrap.min.js"></script>
+  <script src="./libs/js/popper.min.js"></script>
+  <script src="./libs/js/tippy.min.js"></script>
+  <script src="./libs/js/swiper-bundle.min.js"></script>
+  <script src="./libs/js/d3.v7.min.js"></script>
+  <script src="./libs/js/topojson-client.min.js"></script>
+  <script src="./libs/js/choices.min.js"></script>
+  <script src="./scripts/utils.js"></script>
+  <script src="./scripts/us-map.js"></script>
+  <script src="./scripts/main.js"></script>
+</body>
+
+</html>
