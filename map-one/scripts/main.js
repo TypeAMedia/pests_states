@@ -34,6 +34,7 @@ function App() {
     }, {})
 
     console.log(pestData)
+    const topTenStates = pestData.sort((a, b) => a.Ranking - b.Ranking).slice(0, 10)
     const headers = [
       {
         label: 'Rank',
@@ -42,7 +43,7 @@ function App() {
       },
       {
         label: 'State',
-        icon: './images/newIcons/search.svg',
+        icon: './images/newIcons/state.svg',
         fieldValue: 'Name of US State'
       },
       {
@@ -54,9 +55,24 @@ function App() {
         label: 'Farms',
         icon: './images/newIcons/farms.svg',
         fieldValue: 'Number of farms (2022)'
+      },
+      {
+        label: 'Landfills',
+        icon: './images/newIcons/landfills.svg',
+        fieldValue: 'Number of landfills '
+      },
+      {
+        label: 'Searches',
+        icon: './images/newIcons/search.svg',
+        fieldValue: 'Total number of pest-related search queries'
+      },
+      {
+        label: 'Pest Control Companies',
+        icon: './images/newIcons/control.svg',
+        fieldValue: 'Number of pest control companies'
       }
     ]
-    drawTable(headers, pestData)
+    drawTable(headers, topTenStates)
 
     initMaps(newMapData);
     addEvents();
@@ -108,42 +124,36 @@ function App() {
   function drawTable(headers, data) {
     const table = d3.select('#table')
 
-    const filteredData = data
-      .sort((a, b) => a.Ranking - b.Ranking)
-      .filter((d, index) => index <= 10)
+    const tableHeader = table
+      .selectAll('.table-header-row')
+      .data(['tr'])
+      .join('tr')
+      .attr('class', 'table-header-row')
 
-    const header = table
-      .selectAll('div')
+
+    const tableHeaderCells = tableHeader.selectAll('th')
       .data(headers)
-      .join('div')
-      .attr('class', 'table-header')
-      .html(
-        d =>
-          `<img src='${d.icon}'/>
-          <div class='table-label'> ${d.label} </div>
-        `
-      )
+      .join('th')
+      .html((d) => `<div class='header-box'> 
+			  <img src= ${d.icon} class='table-icon' />
+				<div class='header-label'> ${d.label} </div>
+			</div>`)
 
-    const tableRows = header
-      .selectAll('.table-row')
-      .data(filteredData)
-      .join('div')
-      .attr('class', 'table-row')
+    const tableRows = table
+      .selectAll('.table-body-row')
+      .data(data)
+      .join('tr')
+      .attr('class', 'table-body-row')
 
-    console.log(tableRows.node())
-
-
-    tableRows
-      .selectAll('.table-cell')
-      .data(d =>
-        headers.map(head => {
-          return d[head.fieldValue]
-        })
-      )
-      .join('div')
-      .attr('class', 'table-cell')
-      .html(d => d)
+    const tableCells = tableRows
+      .selectAll('td')
+      .data((d) => {
+        return headers.map((header) => d[header.fieldValue])
+      })
+      .join('td')
+      .text((d) => d)
   }
+
 
 
 }

@@ -117,48 +117,49 @@ function App() {
     });
   }
 
-  function drawTable(headers, data) {
-    const table = d3.select('#table')
+  // function drawTable(headers, data) {
+  //   const table = d3.select('#table')
 
-    const filteredData = data
-      .sort((a, b) => b.volume - a.volume)
-      .filter((d, index) => index <= 10)
+  //   const filteredData = data
+  //     .sort((a, b) => b.volume - a.volume)
+  //     .filter((d, index) => index <= 10)
 
-    // Create headers
-    const header = table
-      .selectAll('div.table-header')
-      .data(headers)
-      .join('div')
-      .attr('class', 'table-header')
-      .style('flex', (d) => `1 1 ${d.width}`)
-      .html(d => `
-        <img src='${d.icon}'/>
-        <div class='table-label'> ${d.label} </div>
-      `)
+  //   // Create headers
+  //   const header = table
+  //     .selectAll('div.table-header')
+  //     .data(headers)
+  //     .join('div')
+  //     .attr('class', 'table-header')
+  //     .style('flex', (d) => `1 1 ${d.width}`)
+  //     .html(d => `
+  //       <img src='${d.icon}'/>
+  //       <div class='table-label'> ${d.label} </div>
+  //     `)
 
-    header.each(function (headerData) {
-      const header = d3.select(this)
-      const tableRows = header
-        .selectAll('.table-row')
-        .data(filteredData)
-        .join('div')
-        .attr('class', 'table-row')
+  //   header.each(function (headerData) {
+  //     const header = d3.select(this)
+  //     const tableRows = header
+  //       .selectAll('.table-row')
+  //       .data(filteredData)
+  //       .join('div')
+  //       .attr('class', 'table-row')
 
-      tableRows
-        .selectAll('.table-cell')
-        .data(d => [d[headerData.fieldValue]])
-        .join('div')
-        .attr('class', `table-cell ${headerData.fieldValue}`)
-        .html(d => {
-          if (headerData.fieldValue === 'volume') {
-            return formatThousand(d)
-          } else if (headerData.fieldValue === 'rank') {
-            console.log(d)
-            return `${d}${get_ordinal_suffix(d)}`
-          } else return d
-        })
-    })
-  }
+  //     tableRows
+  //       .selectAll('.table-cell')
+  //       .data(d => [d[headerData.fieldValue]])
+  //       .join('div')
+  //       .attr('class', `table-cell ${headerData.fieldValue}`)
+  //       .html(d => {
+  //         if (headerData.fieldValue === 'volume') {
+  //           return formatThousand(d)
+  //         } else if (headerData.fieldValue === 'rank') {
+  //           console.log(d)
+  //           return `${d}${get_ordinal_suffix(d)}`
+  //         } else return d
+  //       })
+  //   })
+  // }
+
 
 }
 
