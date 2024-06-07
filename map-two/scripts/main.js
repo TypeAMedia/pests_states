@@ -9,8 +9,40 @@ function App() {
     mapJson = geojson;
     pestData = pestsData;
 
+    function cleanKeys(data) {
+      return data.map(obj => {
+        const cleanedObj = {};
+        for (let key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            const cleanedKey = key.trim();
+            cleanedObj[cleanedKey] = obj[key];
+          }
+        }
+        return cleanedObj;
+      });
+    }
+    const newPestsData = cleanKeys(allPests)
 
-    console.log(pestVolumes)
+    function getFirst10StatesForKeyword(keywordObject) {
+      const keyword = keywordObject.Keyword;
+      const stateEntries = Object.entries(keywordObject)
+        .filter(([key]) => key !== 'Keyword' && key !== 'Total')
+        .map(([state, value]) => ({ state, value }))
+        .sort((a, b) => b.value - a.value)
+        .map(({ state, value }) => {
+          return {
+            searches: value,
+            state: state
+          }
+        })
+        .slice(0, 10)
+      return {
+        [keyword]: stateEntries
+      };
+    }
+
+    const first10StatesForEachKeyword = newPestsData.map(getFirst10StatesForKeyword)
+
 
     const pests = pestVolumes.map((d) => {
       return {
@@ -39,8 +71,27 @@ function App() {
 				</div>`,
       searchPlaceholderValue: 'Search',
       searchEnabled: true,
-      cb: (d) => {
-        console.log(d)
+      cb: (pest) => {
+        function findObjectByPest(data, pest) {
+          for (const obj of data) {
+            if (pest in obj) {
+              return obj[pest];
+            }
+          }
+          return null;
+        }
+        const selectedPest = pest.toLowerCase();
+        const foundObject = findObjectByPest(first10StatesForEachKeyword, selectedPest)
+          .map((d, index) => {
+            return {
+              ...d,
+              pest: pest.toLowerCase(),
+              rank: index + 1,
+            }
+          })
+
+        console.log(foundObject)
+        drawTable(stateHeaders, foundObject, `Top 10 States most affected by ${pest} infestations`)
       }
     });
 
@@ -70,6 +121,28 @@ function App() {
         fieldValue: 'volume',
         width: "20%",
       },
+    ]
+
+    const stateHeaders = [
+      {
+        label: 'Rank',
+        icon: './images/newIcons/rank.svg',
+        fieldValue: 'rank',
+        width: "20%",
+      },
+      {
+        label: 'state',
+        icon: './images/newIcons/state.svg',
+        fieldValue: 'state',
+        width: "60%",
+      },
+      {
+        label: 'Searches',
+        icon: './images/newIcons/search.svg',
+        fieldValue: 'searches',
+        width: "20%",
+      },
+
     ]
 
     drawTable(headers, pestVolumes, 'Top 10 pest searches')

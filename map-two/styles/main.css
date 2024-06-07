@@ -318,7 +318,7 @@ header .titles {
 
 .map-content {
   padding: 10px 10px 0px 10px;
-  background-color: #F2F2F2
+  background-color: #ffffff
 }
 
 /* Start of table */
@@ -584,10 +584,6 @@ tr td:first-child {
   color: var(--dark-blue)
 }
 
-
-.tab-content {
-  background-color: #F2F2F2;
-}
 
 
 .is-highlighted,
