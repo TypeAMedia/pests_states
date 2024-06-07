@@ -182,7 +182,6 @@ function App() {
     ]
 
 
-
     drawTable(headers, pestVolumes, 'Top 10 pest searches')
 
     initMaps(newMapData);
@@ -192,7 +191,7 @@ function App() {
   function loadData() {
     return Promise.all([
       d3.json("./data/map.json"),
-      d3.csv('./data/AllData.csv', d3.autoType),
+      d3.csv('./data/Alldata.csv', d3.autoType),
       d3.csv('./data/Pest-by-states.csv', d3.autoType),
       d3.csv('./data/pests.csv', d3.autoType)
     ]).then(([geojson, pestsData, allPests, pestVolumes]) => {
