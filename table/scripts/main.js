@@ -1,9 +1,8 @@
 function App() {
-  let pestData = null;
-
+  let showMore = true;
 
   loadData().then(({ data }) => {
-    console.log(data)
+    let tableData = []
     const headers = [
       {
         label: 'Rank',
@@ -31,7 +30,22 @@ function App() {
         width: "25%",
       }
     ]
-    drawTable(headers, data)
+
+    drawTable(headers, data.filter((d, i) => i <= 9))
+
+    d3.select('#show_more')
+      .on('click', function () {
+        showMore = !showMore
+        if (!showMore) {
+          d3.select(this).html('SHOW LESS')
+          tableData = data
+        } else {
+          d3.select(this).html('SHOW MORE')
+          tableData = data.filter((d, i) => i <= 9)
+        }
+        drawTable(headers, tableData)
+      })
+
     addEvents();
   });
 
@@ -49,6 +63,7 @@ function App() {
       stateMap.resize();
     });
   }
+
 
   function drawTable(headers, data) {
     const table = d3.select('#table')
