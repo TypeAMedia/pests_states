@@ -378,6 +378,10 @@ header .titles {
   color: #051C34
 }
 
+.table-body-row td {
+  font-family: "Open Sans" sans-serif;
+}
+
 .table-icon {
   width: 25px;
   height: 25px;
@@ -420,6 +424,10 @@ header .titles {
   border-top: none !important
 }
 
+tr td:first-child {
+  color: #E02126;
+}
+
 .table th {
   padding: 0.50rem !important
 }
@@ -453,6 +461,13 @@ header .titles {
   width: 340px;
   margin: 20px auto;
   z-index: 999;
+}
+
+
+.choice-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .choices__inner {
@@ -559,7 +574,7 @@ header .titles {
 .btn-zooms {
   position: absolute;
   right: 20px;
-  bottom: 240px;
+  bottom: 60px;
 }
 
 .btn.focus,
@@ -597,9 +612,7 @@ header .titles {
   color: var(--dark-blue)
 }
 
-/* .tab-content {
-  background-color: #F2F2F2;
-} */
+
 
 
 .is-highlighted,
@@ -691,13 +704,13 @@ header .titles {
     margin: 0 auto;
     margin-bottom: 20px;
     display: flex;
-    max-width: 550px;
+    max-width: 400px;
   }
 
   .score-div {
     display: flex;
     margin: 0 auto;
-    max-width: 550px;
+    max-width: 400px;
     justify-content: space-between;
   }
 }

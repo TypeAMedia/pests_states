@@ -27,6 +27,7 @@ function App() {
       });
 
 
+
     initDropdown({
       list: pests,
       id: "#categories_select",
