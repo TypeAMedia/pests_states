@@ -1,9 +1,12 @@
 function App() {
 
+  const scaleExtent = [0.5, 15]
   let mapJson = null;
   let stateMap = null;
   let overallMap = null;
   let pestData = null;
+  let currentZoom = 1
+  let zoomDiff = 0.2
 
   loadData().then(({ geojson, pestsData, allPests, pestVolumes }) => {
     mapJson = geojson;
@@ -72,6 +75,7 @@ function App() {
       searchPlaceholderValue: 'Search',
       searchEnabled: true,
       cb: (pest) => {
+        // Redraw table
         function findObjectByPest(data, pest) {
           for (const obj of data) {
             if (pest in obj) {
@@ -89,12 +93,45 @@ function App() {
               rank: index + 1,
             }
           })
-
-        console.log(foundObject)
         drawTable(stateHeaders, foundObject, `Top 10 States most affected by ${pest} infestations`)
+
+
+        // Map tooltip show
+        const firstState = foundObject[0].state
+        const foundRank = foundObject[0].rank
+        const foundSearches = foundObject[0].searches
+
+        const specificPathNode = d3.select(`path[data-state='${firstState}']`).node();
+        if (specificPathNode) {
+          tippy(specificPathNode, {
+            content: getTooltipContent(firstState, foundRank, foundSearches, 'test', 'mini'),
+            allowHTML: true,
+            arrow: true,
+            theme: 'light',
+            animation: 'scale',
+            placement: 'top',
+            trigger: 'manual'
+          }).show();
+        } else {
+          console.error(`Path node for county '${firstState}' not found.`);
+        }
       }
     });
 
+    const getTooltipContent = (name, value, searches, target, version) => {
+      const nameAndRank = `
+        <div class="name-and-rank">
+       <span class='rank-value'> ${value}${get_ordinal_suffix(value)} </span> ${name} 
+       <span class='search-value'> ${searches}  </span>
+       <span class='search-text'> SEARCHES </span>
+        </div>
+      `;
+
+      if (version === "mini") {
+        return nameAndRank;
+      }
+      return;
+    };
 
     const newMapData = pestData.reduce((obj, d) => {
       obj[d['Name of US State'].trim()] = d.Ranking
@@ -142,8 +179,9 @@ function App() {
         fieldValue: 'searches',
         width: "20%",
       },
-
     ]
+
+
 
     drawTable(headers, pestVolumes, 'Top 10 pest searches')
 
@@ -163,18 +201,6 @@ function App() {
   }
 
   function initMaps(newMapData) {
-    const getTooltipContent = (name, value, target, version) => {
-      const nameAndRank = `
-        <div class="name-and-rank">
-       <span class='rank-value'> ${value}${get_ordinal_suffix(value)} </span> ${name}
-        </div>
-      `;
-
-      if (version === "mini") {
-        return nameAndRank;
-      }
-      return;
-    };
 
     overallMap = USMap({
       container: "#overall_map",
@@ -182,10 +208,7 @@ function App() {
       mobileHeight: 200,
       geojson: mapJson,
       data: newMapData,
-      colors: ['#E02126', '#E0212680', '#0255A3', '#0255A380'],
-      // tooltipContent: ({ name, value }, version) => {
-      //   return getTooltipContent(name, value, 'test', version)
-      // },
+      colors: ['#E02126', '#E0212680', '#0255A3', '#0255A380']
     }).render();
   }
 
@@ -236,7 +259,19 @@ function App() {
       })
   }
 
+  d3.select('#zoom_in').on('click', () => {
+    if (currentZoom + zoomDiff <= scaleExtent[1]) {
+      currentZoom = currentZoom + zoomDiff
+    }
+    overallMap.zoom(currentZoom)
+  })
 
+  d3.select("#zoom_out").on('click', () => {
+    if (currentZoom - zoomDiff >= scaleExtent[0]) {
+      currentZoom = currentZoom - zoomDiff
+    }
+    overallMap.zoom(currentZoom)
+  })
 }
 
 window.addEventListener("DOMContentLoaded", App);

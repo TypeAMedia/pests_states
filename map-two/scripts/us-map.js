@@ -81,10 +81,10 @@ function USMap(params) {
       })
       .attr("viewBox", "0 0 975 710")
       .attr("width", attrs.width)
-      .attr("height", attrs.height);
-    // .call(zoom)
-    // .on("wheel.zoom", null)
-    // .on("dblclick.zoom", null);
+      .attr("height", attrs.height)
+      .call(zoom)
+      .on("wheel.zoom", null)
+      .on("dblclick.zoom", null);
 
     //Add chart group
     chart = svg

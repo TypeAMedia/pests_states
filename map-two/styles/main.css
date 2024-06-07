@@ -273,6 +273,23 @@ header .titles {
   color: #E02126
 }
 
+.search-value {
+  font-family: "Open Sans";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 26px;
+  text-align: left;
+  margin-left: 5px;
+}
+
+.search-text {
+  font-family: "Open Sans";
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  margin-top: 7px;
+}
+
 .rank-box {
   width: 25%;
 }
@@ -555,9 +572,9 @@ tr td:first-child {
 }
 
 .btn-rect {
-  border-radius: 4px;
+  border: 1px solid #051C34;
   background: #FFF;
-  box-shadow: 0px 4px 3px 0px rgba(53, 95, 118, 0.30), 0px 4px 20px 0px rgba(62, 105, 115, 0.20);
+  border-radius: 0 !important;
   width: 40px;
   height: 40px;
   padding: 6px;
@@ -585,10 +602,9 @@ tr td:first-child {
 }
 
 
-
 .is-highlighted,
 .is-selected {
-  background-color: var(--red);
+  background-color: var(--red) !important;
   color: #fff
 }
 

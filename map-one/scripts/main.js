@@ -1,9 +1,12 @@
 function App() {
 
+  const scaleExtent = [0.5, 15]
   let mapJson = null;
   let stateMap = null;
   let overallMap = null;
   let stateData = null;
+  let currentZoom = 1
+  let zoomDiff = 0.2
 
   loadData().then(({ geojson, statesData, pestsData }) => {
     mapJson = geojson;
@@ -174,7 +177,6 @@ function App() {
           }).show();
         } else {
           console.error(`Path node for county '${state}' not found.`);
-
         }
         // redraw table
         const chosenStatePests = newPestsData.filter((d) => d.Keyword !== "Total search volume").slice()
@@ -258,6 +260,21 @@ function App() {
         return index === 0 ? ordinal_suffix_of(d) : d
       })
   }
+
+  d3.select('#zoom_in').on('click', () => {
+    if (currentZoom + zoomDiff <= scaleExtent[1]) {
+      currentZoom = currentZoom + zoomDiff
+    }
+    overallMap.zoom(currentZoom)
+  })
+
+  d3.select("#zoom_out").on('click', () => {
+    if (currentZoom - zoomDiff >= scaleExtent[0]) {
+      currentZoom = currentZoom - zoomDiff
+    }
+    overallMap.zoom(currentZoom)
+  })
+
 
 }
 
