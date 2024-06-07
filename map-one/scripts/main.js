@@ -47,37 +47,44 @@ function App() {
       {
         label: 'Rank',
         icon: './images/newIcons/rank.svg',
-        fieldValue: 'Ranking'
+        fieldValue: 'Ranking',
+        width: '10%'
       },
       {
         label: 'State',
         icon: './images/newIcons/state.svg',
-        fieldValue: 'Name of US State'
+        fieldValue: 'Name of US State',
+        width: '15%'
       },
       {
         label: 'Restaurants',
         icon: './images/newIcons/restaurants.svg',
-        fieldValue: 'Number of restaurants '
+        fieldValue: 'Number of restaurants ',
+        width: '10%'
       },
       {
         label: 'Farms',
         icon: './images/newIcons/farms.svg',
-        fieldValue: 'Number of farms (2022)'
+        fieldValue: 'Number of farms (2022)',
+        width: '15%'
       },
       {
         label: 'Landfills',
         icon: './images/newIcons/landfills.svg',
-        fieldValue: 'Number of landfills '
+        fieldValue: 'Number of landfills ',
+        width: '10%'
       },
       {
         label: 'Searches',
         icon: './images/newIcons/search.svg',
-        fieldValue: 'Total number of pest-related search queries'
+        fieldValue: 'Total number of pest-related search queries',
+        width: '10%'
       },
       {
         label: 'Pest Control Companies',
         icon: './images/newIcons/control.svg',
-        fieldValue: 'Number of pest control companies'
+        fieldValue: 'Number of pest control companies',
+        width: '30%'
       }
     ]
 
@@ -85,17 +92,20 @@ function App() {
     const stateTableHeader = [{
       label: 'Rank',
       icon: './images/newIcons/rank.svg',
-      fieldValue: 'Ranking'
+      fieldValue: 'Ranking',
+      width: '20%'
     },
     {
       label: 'Pest',
       icon: './images/newIcons/control.svg',
-      fieldValue: 'pest'
+      fieldValue: 'pest',
+      width: '60%'
     },
     {
       label: 'Searches',
       icon: './images/newIcons/search.svg',
-      fieldValue: 'Total number of pest-related search queries'
+      fieldValue: 'Total number of pest-related search queries',
+      width: '20%'
     }
     ]
 
@@ -181,12 +191,12 @@ function App() {
 
             }
           })
-        drawTable(stateTableHeader, chosenStatePests, `Top 10 most common pest searches in ${state}`)
+        drawTable(stateTableHeader, chosenStatePests, `Top 10 most common pest searches in ${state}`, '400px')
       }
     });
 
 
-    drawTable(headers, topTenStates, 'Top 10 States most affected by pest infestations')
+    drawTable(headers, topTenStates, 'Top 10 States most affected by pest infestations', '798px')
     initMaps(newMapData);
     addEvents();
   });
@@ -208,7 +218,10 @@ function App() {
     });
   }
 
-  function drawTable(headers, data, title) {
+  function drawTable(headers, data, title, width) {
+
+
+    d3.select('.table-box').style('width', window.innerWidth < 576 ? '100%' : width)
 
     d3.select('.table-title').html(title)
     const table = d3.select('#table')
@@ -223,6 +236,7 @@ function App() {
     const tableHeaderCells = tableHeader.selectAll('th')
       .data(headers)
       .join('th')
+      .style('width', (d) => d.width)
       .html((d) => `<div class='header-box'> 
 			  <img src= ${d.icon} class='table-icon' />
 				<div class='header-label'> ${d.label} </div>
