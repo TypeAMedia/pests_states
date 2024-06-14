@@ -53,15 +53,29 @@ function App() {
         value: d.pest
       }
     }).filter((d) => d.label !== 'Total search volume')
-      .sort((a, b) => {
-        if (a.label < b.label) {
-          return -1;
-        }
-        if (a.label > b.label) {
-          return 1;
-        }
-        return 0;
-      });
+
+    pests.push({
+      label: 'Select Pest',
+      value: 'Select Pest'
+    })
+
+    pests.sort((a, b) => {
+      const specialLabel = "Select Pest";
+
+      if (a.label === specialLabel && b.label !== specialLabel) {
+        return -1; // a comes before b
+      }
+      if (b.label === specialLabel && a.label !== specialLabel) {
+        return 1;
+      }
+      if (a.label < b.label) {
+        return -1;
+      }
+      if (a.label > b.label) {
+        return 1;
+      }
+      return 0;
+    });
 
     initDropdown({
       list: pests,
@@ -76,44 +90,49 @@ function App() {
       searchEnabled: true,
       cb: (pest) => {
         // Redraw table
-        function findObjectByPest(data, pest) {
-          for (const obj of data) {
-            if (pest in obj) {
-              return obj[pest];
+        if (pest !== 'Select Pest') {
+          function findObjectByPest(data, pest) {
+            for (const obj of data) {
+              if (pest in obj) {
+                return obj[pest];
+              }
             }
+            return null;
           }
-          return null;
+          const selectedPest = pest.toLowerCase();
+          const foundObject = findObjectByPest(first10StatesForEachKeyword, selectedPest)
+            .map((d, index) => {
+              return {
+                ...d,
+                pest: pest.toLowerCase(),
+                rank: index + 1,
+              }
+            })
+          // Map tooltip show
+          const firstState = foundObject[0].state
+          const foundRank = foundObject[0].rank
+          const foundSearches = foundObject[0].searches
+
+          const specificPathNode = d3.select(`path[data-state='${firstState}']`).node();
+          if (specificPathNode) {
+            tippy(specificPathNode, {
+              content: getTooltipContent(firstState, foundRank, foundSearches, 'test', 'mini'),
+              allowHTML: true,
+              arrow: true,
+              theme: 'light',
+              animation: 'scale',
+              placement: 'top',
+              trigger: 'manual'
+            }).show();
+          } else {
+            console.error(`Path node for county '${firstState}' not found.`);
+          }
+          drawTable(stateHeaders, foundObject, `Top 10 States most affected by ${pest} infestations`)
+
         }
-        const selectedPest = pest.toLowerCase();
-        const foundObject = findObjectByPest(first10StatesForEachKeyword, selectedPest)
-          .map((d, index) => {
-            return {
-              ...d,
-              pest: pest.toLowerCase(),
-              rank: index + 1,
-            }
-          })
-        drawTable(stateHeaders, foundObject, `Top 10 States most affected by ${pest} infestations`)
 
-
-        // Map tooltip show
-        const firstState = foundObject[0].state
-        const foundRank = foundObject[0].rank
-        const foundSearches = foundObject[0].searches
-
-        const specificPathNode = d3.select(`path[data-state='${firstState}']`).node();
-        if (specificPathNode) {
-          tippy(specificPathNode, {
-            content: getTooltipContent(firstState, foundRank, foundSearches, 'test', 'mini'),
-            allowHTML: true,
-            arrow: true,
-            theme: 'light',
-            animation: 'scale',
-            placement: 'top',
-            trigger: 'manual'
-          }).show();
-        } else {
-          console.error(`Path node for county '${firstState}' not found.`);
+        if (pest === 'Select Pest') {
+          drawTable(headers, pestVolumes, 'Top 10 pest searches')
         }
       }
     });

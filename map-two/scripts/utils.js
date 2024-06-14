@@ -205,10 +205,9 @@ function initDropdown({ list, id, cb, placeholder }) {
   const select = document.querySelector(id);
   const options = list.slice();
 
-
-  if (placeholder) {
-    options.unshift({ label: placeholder, value: '', selected: true })
-  }
+  // if (placeholder) {
+  //   options.unshift({ label: placeholder, value: '', selected: true })
+  // }
 
   const choice = new Choices(select, {
     choices: options,

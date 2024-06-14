@@ -192,14 +192,15 @@ function initDropdown({ list, id, cb, placeholder }) {
   const options = list.slice();
 
 
-  if (placeholder) {
-    options.unshift({ label: placeholder, value: '', selected: true })
-  }
+  // if (placeholder) {
+  //   options.unshift({ label: placeholder, value: '', selected: true })
+  // }
 
   const choice = new Choices(select, {
     choices: options,
     position: "bottom",
     shouldSort: false,
+    placeholder: 'Select State',
     itemSelectText: "",
     searchPlaceholderValue: 'Search',
     searchResultLimit: options.length,

@@ -503,6 +503,18 @@ tr td:first-child {
   transform-origin: center;
 }
 
+.choices__item,
+.choices__item--choice {
+  display: flex;
+  align-items: center;
+}
+
+.choices__item::before,
+.choices__item--choice::before {
+  content: attr(data-icon);
+  margin-right: 8px;
+  font-size: 16px;
+}
 
 .choices.is-open.is-focused:after {
   border-color: transparent;
